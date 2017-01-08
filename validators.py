@@ -19,9 +19,9 @@ def validate_movie_date(movie_date):
     if type(movie_date) is not str:
         raise TypeError("Type of movie date must be string")
     # TODO: with regular expression
-    year = movie_date.split('-')[0]
-    month = movie_date.split('-')[1]
-    day = movie_date.split('-')[2]
+    year = int(movie_date.split('-')[0])
+    month = int(movie_date.split('-')[1])
+    day = int(movie_date.split('-')[2])
     datetime.datetime(year=year, month=month, day=day)
 
 
