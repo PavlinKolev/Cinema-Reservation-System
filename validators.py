@@ -1,18 +1,20 @@
 import datetime
+from settings import (MIN_MOVIE_RATING, MAX_MOVIE_RATING, MOVIE_TYPES,
+                    MIN_PASS_LEN, HALL_ROWS, HALL_COLS, OCCUPIED_SEAT)
 
 
 def validate_movie_rating(rating):
-    if type(rating) is not float:
+    if type(rating) is not float and type(rating) is not int:
         raise TypeError("Type of movie rating must be real number.")
-    if rating < float(0) or rating > float(10):
+    if rating < MIN_MOVIE_RATING or rating > MAX_MOVIE_RATING:
         raise ValueError("Movie rating is out of range.")
 
 
 def validate_movie_type(movie_type):
     if type(movie_type) is not str:
         raise TypeError("Type of movie type must be string")
-    if movie_type != "2D" and movie_type != "3D" and movie_type != "4DX":
-        raise ValueError("Type of movie must be 2D, 3D or 4DX")
+    if movie_type not in MOVIE_TYPES:
+        raise ValueError("Type of movie must be one of {}.".format(' '.join(MOVIE_TYPES)))
 
 
 def validate_movie_date(movie_date):
@@ -22,6 +24,7 @@ def validate_movie_date(movie_date):
     year = int(movie_date.split('-')[0])
     month = int(movie_date.split('-')[1])
     day = int(movie_date.split('-')[2])
+    # will raise ValueError if something is out of range
     datetime.datetime(year=year, month=month, day=day)
 
 
@@ -31,13 +34,13 @@ def validate_movie_time(movie_time):
         minutes = int(movie_time.split(':')[1])
         if hour < 0 or hour > 23 or minutes < 0 or minutes > 60:
             raise ValueError("Invalid movie time")
-    except TypeError:
+    except:
         raise ValueError("Invalid movie time")
 
 
 def validate_password(password):
-    if len(password) < 8:
-        raise ValueError("Length of password must be at least {} symbols".format(8))
+    if len(password) < MIN_PASS_LEN:
+        raise ValueError("Length of password must be at least {} symbols".format(MIN_PASS_LEN))
     no_upper = True
     no_lower = True
     no_digit = True
@@ -57,5 +60,31 @@ def validate_password(password):
 
 
 def validate_row_col(row, col):
-    if row < 1 or row > 10 or col < 1 or col > 10:
-        raise ValueError("Row or col is out of range[1:10].")
+    validate_row(row)
+    validate_col(col)
+
+
+def validate_row(row):
+    if row < 1 or row > HALL_ROWS:
+        raise ValueError("Row is out of range: [{}:{}]".format(1, HALL_ROWS))
+
+
+def validate_col(col):
+    if col < 1 or col > HALL_COLS:
+        raise ValueError("Col is out of range: [{}:{}]".format(1, HALL_COLS))
+
+
+def validate_row_col_in_matrix(matrix, row, col):
+    try:
+        row = int(row) - 1
+        col = int(col) - 1
+        if row < 0 or row >= 10 or col < 0 or col >= 10:
+            print("Row or col is out of range.")
+            return False
+    except ValueError:
+        print("Type of row or col is not int.")
+        return False
+    if matrix[row][col] == OCCUPIED_SEAT:
+        print("This seat is alredy taken! Please choose another seat.")
+        return False
+    return True
