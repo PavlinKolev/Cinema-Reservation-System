@@ -1,6 +1,7 @@
-from prettyPrints import print_matrix_hall
-from validators import validate_row_col_in_matrix
-from settings import OCCUPIED_SEAT
+from helpers.prettyPrints import print_matrix_hall
+from helpers.clean_screen import clean_screen
+from settings.general_settings import OCCUPIED_SEAT
+from user_interface.validators import validate_row_col_in_matrix
 
 
 class ReservationInterface:
@@ -30,16 +31,19 @@ class ReservationInterface:
                     raise ValueError("Unvalid number of tickets")
                 return tickets
             except ValueError as error:
-                input(str(error) + "\nPress Enter to continue...")
+                print(error)
 
     def __choose_the_seats(self, tickets, matrix, projection_id):
         for i in range(tickets):
             while True:
+                clean_screen()
                 print_matrix_hall(matrix)
                 row = input("row:> ")
                 col = input("col:> ")
-                if validate_row_col_in_matrix(matrix, row, col):
+                try:
+                    validate_row_col_in_matrix(matrix, row, col)
                     matrix[int(row) - 1][int(col) - 1] = OCCUPIED_SEAT
                     self.cinema.add_reservation(self.user_id, projection_id, int(row), int(col))
                     break
-                
+                except ValueError as error:
+                    print(error)

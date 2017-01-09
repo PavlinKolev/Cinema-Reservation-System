@@ -1,4 +1,4 @@
-from settings import FREE_SEAT, OCCUPIED_SEAT, HALL_COLS, HALL_ROWS
+from settings.general_settings import FREE_SEAT, OCCUPIED_SEAT, HALL_COLS, HALL_ROWS
 
 
 def cinema_hall_matrix(occ_seats):

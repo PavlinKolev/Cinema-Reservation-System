@@ -1,5 +1,5 @@
 import os
-from cinema_db import CinemaDB
+from database.cinema_db import CinemaDB
 
 
 def set_data(cinema):

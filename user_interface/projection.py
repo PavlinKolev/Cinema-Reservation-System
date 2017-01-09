@@ -1,3 +1,6 @@
+from helpers.clean_screen import clean_screen
+
+
 class ProjectionInterface:
     def show_movie_projections(self, arguments):
         arguments = arguments.split(' ')
@@ -16,4 +19,5 @@ class ProjectionInterface:
                 self.cinema.validate_projection_id(projection_id)
                 return projection_id
             except ValueError as error:
+                clean_screen()
                 input(str(error) + "\nPress Enter to continue...")

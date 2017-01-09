@@ -1,12 +1,13 @@
 import os
 import sys
-from cinema_db import CinemaDB
-from create_custom_cinema import set_data, is_cinema_existing
-from settings import SPELLS_COUNT, SPELLS
-from movie import MovieInterface
-from projection import ProjectionInterface
-from reservation import ReservationInterface
-from user import UserInterface
+from database.cinema_db import CinemaDB
+from database.create_custom_cinema import set_data, is_cinema_existing
+from settings.general_settings import SPELLS_COUNT, SPELLS
+from helpers.clean_screen import clean_screen
+from user_interface.movie import MovieInterface
+from user_interface.projection import ProjectionInterface
+from user_interface.reservation import ReservationInterface
+from user_interface.user import UserInterface
 
 
 class Interface(MovieInterface, ProjectionInterface,
@@ -21,11 +22,13 @@ class Interface(MovieInterface, ProjectionInterface,
 
     def run(self):
         while True:
-            command = input(":> ")
+            clean_screen()
+            command = input("Enter spell:> ")
             try:
                 self.__dispatch(command)
             except ValueError as error:
-                input(str(error) + "\nPress Enter to continue...")
+                print(str(error) + "\n")
+            input("Press Enter to continue...")
 
     def __exit(self):
         sys.exit()

@@ -1,13 +1,14 @@
 import sqlite3
-from create_db_queries import *
-from manage_db_queries import *
-from password import encode
-from prettyPrints import prettyPrintMovies, prettyPrintMovieProjections
-from settings import MAX_SEATS
-from cinema_hall import cinema_hall_matrix
-from validators import (validate_movie_rating, validate_movie_type,
-                        validate_movie_date, validate_movie_time,
-                        validate_password, validate_row_col)
+from queries.create_db_queries import *
+from queries.manage_db_queries import *
+from helpers.password import encode
+from helpers.prettyPrints import prettyPrintMovies, prettyPrintMovieProjections
+from helpers.cinema_hall import cinema_hall_matrix
+from settings.general_settings import MAX_SEATS
+from user_interface.validators import (validate_movie_rating,
+                                    validate_movie_type,
+                                    validate_movie_date, validate_movie_time,
+                                    validate_password, validate_row_col)
 
 
 class CinemaDB:

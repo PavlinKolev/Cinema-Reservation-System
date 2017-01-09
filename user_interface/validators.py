@@ -1,6 +1,7 @@
 import datetime
-from settings import (MIN_MOVIE_RATING, MAX_MOVIE_RATING, MOVIE_TYPES,
-                    MIN_PASS_LEN, HALL_ROWS, HALL_COLS, OCCUPIED_SEAT)
+from settings.general_settings import (MIN_MOVIE_RATING, MAX_MOVIE_RATING,
+                                        MOVIE_TYPES, MIN_PASS_LEN, HALL_ROWS,
+                                        HALL_COLS, OCCUPIED_SEAT)
 
 
 def validate_movie_rating(rating):
@@ -75,16 +76,9 @@ def validate_col(col):
 
 
 def validate_row_col_in_matrix(matrix, row, col):
-    try:
-        row = int(row) - 1
-        col = int(col) - 1
-        if row < 0 or row >= 10 or col < 0 or col >= 10:
-            print("Row or col is out of range.")
-            return False
-    except ValueError:
-        print("Type of row or col is not int.")
-        return False
+    row = int(row) - 1
+    col = int(col) - 1
+    if row < 0 or row >= 10 or col < 0 or col >= 10:
+        raise ValueError("Row or col is out of range.")
     if matrix[row][col] == OCCUPIED_SEAT:
-        print("This seat is alredy taken! Please choose another seat.")
-        return False
-    return True
+        raise ValueError("This seat is alredy taken! Please choose another seat.")

@@ -1,5 +1,6 @@
 import getpass
-from validators import validate_password
+from user_interface.validators import validate_password
+from helpers.clean_screen import clean_screen
 
 
 class UserInterface:
@@ -10,6 +11,7 @@ class UserInterface:
             self.user_id = self.change_user(self.user_id)
 
     def log_or_sign(self):
+        clean_screen()
         print("1) Log in as existing user\n" +
                 "2) Register as new user")
         choose = input(":> ")
@@ -51,7 +53,7 @@ class UserInterface:
                 user_id = self.cinema.get_id_of_username(username)
                 return user_id
             except ValueError as error:
-                input(str(error) + "\nPress Enter to continue...")
+                print(error)
 
     def __read_existing_user_password(self, user_id):
         while True:
@@ -60,7 +62,7 @@ class UserInterface:
                 self.cinema.validate_password_of_user(user_id, password)
                 break
             except ValueError as error:
-                input(str(error) + "\nPress Enter to continue...")
+                print(error)
 
     def __read_new_username(self):
         while True:
@@ -69,7 +71,7 @@ class UserInterface:
                 self.cinema.validate_new_username(username)
                 return username
             except ValueError as error:
-                input(str(error) + "\nPress Enter to continue...")
+                print(error)
 
     def __read_new_user_password(self):
         while True:
@@ -81,7 +83,7 @@ class UserInterface:
                     raise ValueError("Different password.")
                 return password
             except ValueError as error:
-                input(str(error) + "\nPress Enter to continue...")
+                print(error)
 
     def cancel_reservation(self, user_name):
         self.cinema.remove_reservations_for_user(user_name)
