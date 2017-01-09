@@ -4,12 +4,6 @@ from helpers.clean_screen import clean_screen
 
 
 class UserInterface:
-    def choose_user(self):
-        if self.user_id is None:
-            self.user_id = self.log_or_sign()
-        else:
-            self.user_id = self.change_user(self.user_id)
-
     def log_or_sign(self):
         clean_screen()
         print("1) Log in as existing user\n" +
