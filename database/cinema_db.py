@@ -69,7 +69,6 @@ class CinemaDB:
 
     def register_user(self, username, password):
         self.cursor.execute(ADD_USER, (username, encode(password)))
-        self.db.commit()
         user_id = self.cursor.lastrowid
         self.__make_user_active(user_id)
         return user_id
@@ -81,7 +80,6 @@ class CinemaDB:
     def remove_reservations_for_user(self, user_name):
         user_id = self.get_id_of_username(user_name)
         self.cursor.execute(DELETE_ALL_RESERVATION_OF_USER, (user_id, ))
-        self.db.commit()
 
     def get_username_for_id(self, user_id):
         self.validate_user_id(user_id)
@@ -112,7 +110,6 @@ class CinemaDB:
 
     def __make_user_active(self, user_id):
         self.cursor.execute(UPDATE_USER_IS_ACTIVE, (1, user_id))
-        self.db.commit()
 
     def matrix_seats_for_projection(self, projection_id):
         self.cursor.execute(SEATS_FOR_PROJECTION, (projection_id, ))

@@ -8,6 +8,8 @@ from user_interface.movie import MovieInterface
 from user_interface.projection import ProjectionInterface
 from user_interface.reservation import ReservationInterface
 from user_interface.user import UserInterface
+from helpers.color_print import print
+from helpers.color_print import input_
 
 
 class Interface(MovieInterface, ProjectionInterface, ReservationInterface, UserInterface):
@@ -22,12 +24,12 @@ class Interface(MovieInterface, ProjectionInterface, ReservationInterface, UserI
     def run(self):
         while True:
             clean_screen()
-            command = input("Enter spell:> ")
+            command = input_("Enter spell:> ")
             try:
                 self.__dispatch(command)
             except ValueError as error:
                 print(str(error) + "\n")
-            input("Press Enter to continue...")
+            input_("Press Enter to continue...")
 
     def __exit(self):
         sys.exit()

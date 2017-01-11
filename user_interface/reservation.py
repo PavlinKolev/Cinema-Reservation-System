@@ -5,6 +5,8 @@ from user_interface.validators import validate_row_col_in_matrix
 from user_interface.user import UserInterface
 from decorators.atomic import atomic
 from decorators.user_exists import user_exists
+from decorators.log_info import log_info
+from helpers.color_print import print, input_
 
 
 class ReservationInterface:
@@ -30,7 +32,7 @@ class ReservationInterface:
     def __read_number_of_tickets(self):
         while True:
             try:
-                tickets = int(input("number of tickets:> "))
+                tickets = int(input_("number of tickets:> "))
                 if tickets < 1 or tickets > 100:
                     raise ValueError("Unvalid number of tickets")
                 return tickets
@@ -43,8 +45,8 @@ class ReservationInterface:
             while True:
                 clean_screen()
                 print_matrix_hall(matrix)
-                row = input("row:> ")
-                col = input("col:> ")
+                row = input_("row:> ")
+                col = input_("col:> ")
                 try:
                     validate_row_col_in_matrix(matrix, row, col)
                     matrix[int(row) - 1][int(col) - 1] = OCCUPIED_SEAT
@@ -54,6 +56,7 @@ class ReservationInterface:
                     print(error)
         return seats
 
+    @log_info("logs.txt")
     @atomic
     def finalize(self, user_id, projection_id, seats):
         for [r, c] in seats:

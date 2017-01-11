@@ -1,4 +1,5 @@
 from helpers.clean_screen import clean_screen
+from helpers.color_print import input_
 
 
 class ProjectionInterface:
@@ -15,9 +16,9 @@ class ProjectionInterface:
         while True:
             try:
                 self.show_movie_projections(movie_id)
-                projection_id = int(input("projection id:> "))
+                projection_id = int(input_("projection id:> "))
                 self.cinema.validate_projection_id(projection_id)
                 return projection_id
             except ValueError as error:
                 clean_screen()
-                input(str(error) + "\nPress Enter to continue...")
+                input_(str(error) + "\nPress Enter to continue...")

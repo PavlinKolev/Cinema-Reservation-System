@@ -1,4 +1,5 @@
 from prettytable import PrettyTable
+from helpers.color_print import print
 
 
 def prettyPrintMovies(movies):
